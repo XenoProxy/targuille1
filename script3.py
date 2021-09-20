@@ -8,13 +8,13 @@ for proc in psutil.process_iter():
     try:
         name = proc.name()
         pid = proc.pid
-        if 'python' in name:
-            if not os.path.exists(path):
-                os.makedirs(path)
+        if not os.path.exists(path):
+            os.makedirs(path)
+        if 'java' in name:
             with open(
-                    os.path.join(path, f'access_{pid}.txt'),
+                    os.path.join(path, 'java_pid_list.txt'),
                     'a+', encoding='utf-8') as file:
-                file.write('')
-            print(name, ' : ', pid)
+                file.write(f'PID: {pid}   NAME: {name}' + '\n')
+            print(name, ': ', pid)
     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
         pass
